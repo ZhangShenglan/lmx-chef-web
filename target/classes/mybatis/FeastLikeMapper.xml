@@ -7,7 +7,7 @@
         <result property="id" column="id"/>
         <result property="userId" column="userId"/>
         <result property="feastId" column="feastId"/>
-        <result property="createTime" column="createTime"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="FeastLike">
@@ -15,9 +15,40 @@
         values(#{userId}, #{feastId}, #{createTime})
     </insert>
 
+    <update id="update" parameterType="FeastLike">
+        update feast_beliked
+        set
+        id= #{id},userId=#{userId},feastId=#{feastId},create_time=#{createTime},is_delete=#{isDelete}
+        where id=#{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="FeastLikeResult">
+        SELECT * FROM feast_beliked
+        where is_delete != -1 and id= #{id}
+    </select>
+
     <select id="getByUserId" parameterType="java.util.Map" resultMap="FeastLikeResult">
         SELECT * FROM feast_beliked
         <where>
+            is_delete != -1 and userId=#{userId}
+        </where>
+        ${sort}
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="getNumByUserId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(id) FROM feast_beliked
+        <where>
+            is_delete != -1 and userId=#{userId}
+        </where>
+    </select>
+
+    <select id="getByUserMap" parameterType="java.util.Map" resultMap="FeastLikeResult">
+        SELECT * FROM feast_beliked
+        <where>
+            is_delete != -1
             <if test="userId!=null">
                 and userId = #{userId}
             </if>

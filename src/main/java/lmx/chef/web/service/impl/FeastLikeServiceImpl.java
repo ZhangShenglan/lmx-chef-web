@@ -6,6 +6,7 @@ import lmx.chef.web.service.FeastLikeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,8 +24,27 @@ public class FeastLikeServiceImpl implements FeastLikeService {
     }
 
     @Override
-    public FeastLike getByUserId(Map<String, Object> map){
+    public int update(FeastLike feastLike){
+        return feastLikeMapper.update(feastLike);
+    }
+
+    @Override
+    public List<FeastLike> getByUserId(Map<String, Object> map){
         return feastLikeMapper.getByUserId(map);
+    }
+
+    @Override
+    public int getNumByUserId(Map<String, Object> map){
+        return feastLikeMapper.getNumByUserId(map);
+    }
+
+    @Override
+    public FeastLike getById(Long id){
+        return feastLikeMapper.getById(id);
+    }
+    @Override
+    public FeastLike getByUserMap(Map<String, Object> map){
+        return feastLikeMapper.getByUserMap(map);
     }
 
 

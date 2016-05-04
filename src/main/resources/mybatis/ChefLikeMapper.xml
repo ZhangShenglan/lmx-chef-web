@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lmx.chef.web.dbproxy.dao.ChefLikeMapper">
+
+    <resultMap type="ChefLike" id="ChefLikeResult">
+        <result property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="chefId" column="chefId"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="ChefLike">
+        insert into chef_beliked(userId, chefId, create_time)
+        values(#{userId}, #{chefId}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="ChefLike">
+        update chef_beliked
+        set
+        id= #{id},userId=#{userId},chefId=#{chefId},create_time=#{createTime},is_delete=#{isDelete}
+        where id=#{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="ChefLikeResult">
+        SELECT * FROM chef_beliked
+        where is_delete != -1 and id= #{id}
+    </select>
+
+    <select id="getByUserId" parameterType="java.util.Map" resultMap="ChefLikeResult">
+        SELECT * FROM chef_beliked
+        <where>
+            is_delete != -1 and userId=#{userId}
+        </where>
+        ${sort}
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="getNumByUserId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(id) FROM chef_beliked
+        <where>
+            is_delete != -1 and userId=#{userId}
+        </where>
+    </select>
+
+    <select id="getByMap" parameterType="java.util.Map" resultMap="ChefLikeResult">
+        SELECT * FROM chef_beliked
+        <where>
+            is_delete != -1
+            <if test="userId!=null">
+                and userId = #{userId}
+            </if>
+            <if test="chefId!=null">
+                and chefId = #{chefId}
+            </if>
+        </where>
+    </select>
+    </mapper>
