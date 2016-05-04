@@ -33,4 +33,6 @@ public interface ChefMapper {
      */
     Chef getById(Long chefId);
 
+    int update(Chef chef);
+
 }

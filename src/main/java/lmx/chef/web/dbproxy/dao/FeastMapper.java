@@ -32,5 +32,7 @@ public interface FeastMapper {
      * @return
      */
     Feast getById(Long id);
+
+    int update(Feast feast);
     
 }

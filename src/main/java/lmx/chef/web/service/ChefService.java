@@ -30,4 +30,6 @@ public interface ChefService {
      */
     Chef getById(Long chefId);
 
+    int update(Chef chef);
+
 }

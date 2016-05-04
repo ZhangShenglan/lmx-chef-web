@@ -9,6 +9,8 @@
         <result property="state" column="state"/>
         <result property="unitPrice" column="unitPrice"/>
         <result property="number" column="number"/>
+        <result property="phone" column="phone"/>
+        <result property="remark" column="remark"/>
     </resultMap>
 
     <select id="getByMap" parameterType="java.util.Map" resultMap="OrderResult">
@@ -30,5 +32,10 @@
            userId=#{userId}
         </where>
     </select>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="Order">
+        insert into privateKitchen.order(feastId, userId, state,unitPrice,number,phone,remark)
+        values(#{feastId}, #{userId}, #{state},#{unitPrice},#{number},#{phone},#{remark})
+    </insert>
 
     </mapper>

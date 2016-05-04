@@ -19,5 +19,7 @@ public interface ChefLikeService {
 
     int getNumByUserId(Map<String, Object> map);
 
+    int getNumByChefId(Long chefId);
+
     ChefLike getByMap(Map<String, Object> map);
 }

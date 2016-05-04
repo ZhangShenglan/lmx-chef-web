@@ -32,4 +32,9 @@ public class ChefServiceImpl implements ChefService{
     public Chef getById(Long chefId){
         return chefMapper.getById(chefId);
     }
+
+    @Override
+    public int update(Chef chef){
+        return chefMapper.update(chef);
+    }
 }

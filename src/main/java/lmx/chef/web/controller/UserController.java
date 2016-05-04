@@ -48,6 +48,9 @@ public class UserController {
     @Resource
     private OrderService orderService;
 
+    @Resource
+    private CommentService commentService;
+
     @RequestMapping("/bindPhone")
     public String bindPhone(@RequestParam(value = "phone", required = true) String phone,
                             @RequestParam(value = "avatar", required = true) String avatar,
@@ -138,6 +141,10 @@ public class UserController {
         feastLike.setCreateTime(DateUtil.getCurrentDate());
         int flag = feastLikeService.create(feastLike);
         if(flag > 0){
+            Feast feast = feastService.getById(feastId);
+            feast.setLiked(feast.getLiked()+1);
+            feastService.update(feast);
+
             result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
             result.put("message","success");
             ResponseUtil.write(response, result);
@@ -164,6 +171,9 @@ public class UserController {
         feastLike.setIsDelete(-1);
         int flag = feastLikeService.update(feastLike);
         if(flag > 0){
+            Feast feast = feastService.getById(feastLike.getFeastId());
+            feast.setLiked(feast.getLiked()+1);
+            feastService.update(feast);
             result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
             result.put("message","success");
             ResponseUtil.write(response, result);
@@ -209,6 +219,9 @@ public class UserController {
         chefLike.setCreateTime(DateUtil.getCurrentDate());
         int flag = chefLikeService.create(chefLike);
         if(flag > 0){
+            Chef chef = chefService.getById(chefId);
+            chef.setLikedNum(chef.getLikedNum()+1);
+            chefService.update(chef);
             result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
             result.put("message","success");
             ResponseUtil.write(response, result);
@@ -235,6 +248,9 @@ public class UserController {
         chefLike.setIsDelete(-1);
         int flag = chefLikeService.update(chefLike);
         if(flag > 0){
+            Chef chef = chefService.getById(chefLike.getChefId());
+            chef.setLikedNum(chef.getLikedNum()-1);
+            chefService.update(chef);
             result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
             result.put("message","success");
             ResponseUtil.write(response, result);
@@ -345,7 +361,7 @@ public class UserController {
     }
 
     @RequestMapping("/orderList")
-    public String orderList (@RequestParam(value = "userId", required = true) Long userId,
+    public String orderList(@RequestParam(value = "userId", required = true) Long userId,
                                 @RequestParam(value = "currPage", required = false) Integer currPage,
                                 @RequestParam(value = "pageSize", required = false) Integer pageSize,
                                 HttpServletResponse response) throws Exception{
@@ -383,6 +399,47 @@ public class UserController {
         result.put("total", total);
         result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
         result.put("message","success");
+        ResponseUtil.write(response, result);
+        return null;
+    }
+
+    @RequestMapping("/postComment")
+    public String postComment (@RequestParam(value = "userId", required = true) Long userId,
+                               @RequestParam(value = "chefId", required = true) Long chefId,
+                               @RequestParam(value = "comment", required = false) String comment,
+                               @RequestParam(value = "images",required = false) String images,
+                               HttpServletResponse response) throws Exception{
+        JSONObject result = new JSONObject();
+        if(userId == null || userId < 1){
+            result.put("statusCode", Constants.RESULT_CODE_ILLEGAL_REQUST);
+            result.put("message","用户id不能为空");
+            ResponseUtil.write(response, result);
+            return null;
+        }
+        if(chefId == null || chefId < 1){
+            result.put("statusCode", Constants.RESULT_CODE_ILLEGAL_REQUST);
+            result.put("message","私厨id不能为空");
+            ResponseUtil.write(response, result);
+            return null;
+        }
+        Comment commentBean = new Comment();
+        commentBean.setUserId(userId);
+        commentBean.setChefId(chefId);
+        commentBean.setComment(StringUtil.isNotEmpty(comment) ? comment : "");
+        commentBean.setImages(StringUtil.isNotEmpty(images) ? images : "");
+        commentBean.setCreateTime(DateUtil.getCurrentDate());
+
+        int flag = commentService.create(commentBean);
+
+        if(flag > 0){
+            result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
+            result.put("message","success");
+            ResponseUtil.write(response, result);
+            return null;
+        }
+
+        result.put("statusCode", Constants.RESULT_CODE_ILLEGAL_REQUST);
+        result.put("message"," 评论发表失败");
         ResponseUtil.write(response, result);
         return null;
     }

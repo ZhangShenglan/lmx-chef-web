@@ -6,6 +6,7 @@ import lmx.chef.web.service.ChefLikeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,10 +37,19 @@ public class ChefLikeServiceImpl implements ChefLikeService{
     public List<ChefLike> getByUserId(Map<String, Object> map){
         return chefLikeMapper.getByUserId(map);
     }
+
     @Override
     public int getNumByUserId(Map<String, Object> map){
         return chefLikeMapper.getNumByUserId(map);
     }
+
+    @Override
+    public int getNumByChefId(Long chefId){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("chefId",chefId);
+        return chefLikeMapper.getNumByUserId(map);
+    }
+
     @Override
     public ChefLike getByMap(Map<String, Object> map){
         return chefLikeMapper.getByMap(map);

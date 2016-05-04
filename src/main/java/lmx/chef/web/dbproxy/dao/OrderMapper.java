@@ -16,4 +16,5 @@ public interface OrderMapper {
 
     int getNumByUserId(Map<String, Object> map);
 
+    int create(Order order);
 }

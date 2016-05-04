@@ -33,4 +33,9 @@ public class FeastServiceImpl implements FeastService {
     public Feast getById(Long id){
         return feastMapper.getById(id);
     }
+
+    @Override
+    public int update(Feast feast){
+        return feastMapper.update(feast);
+    }
 }

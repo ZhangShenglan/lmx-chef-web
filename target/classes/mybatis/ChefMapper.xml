@@ -10,6 +10,7 @@
         <result property="place" column="place"/>
         <result property="likedNum" column="likedNum"/>
         <result property="desc" column="desc"/>
+        <result property="joinTime" column="joinTime"/>
     </resultMap>
 
     <select id="getChefList" parameterType="java.util.Map" resultMap="ChefResult">
@@ -39,5 +40,11 @@
         WHERE chefId = #{chefId}
     </select>
 
+    <update id="update" parameterType="Chef">
+        update chef
+        set
+        chefId= #{chefId},name=#{name},awatar=#{awatar},region=#{region},place=#{place},likedNum= #{likedNum},desc=#{desc},joinTime=#{joinTime}
+        where chefId=#{chefId}
+    </update>
 
 </mapper>

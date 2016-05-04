@@ -2,8 +2,12 @@ package lmx.chef.web.controller;
 
 import lmx.chef.web.common.Constants;
 import lmx.chef.web.dbproxy.entity.Chef;
+import lmx.chef.web.dbproxy.entity.Comment;
 import lmx.chef.web.dbproxy.entity.PageBean;
+import lmx.chef.web.service.ChefLikeService;
 import lmx.chef.web.service.ChefService;
+import lmx.chef.web.service.CommentService;
+import lmx.chef.web.service.JoinFeastService;
 import lmx.chef.web.util.ResponseUtil;
 import lmx.chef.web.util.StringUtil;
 import net.sf.json.JSONArray;
@@ -28,6 +32,13 @@ public class ChefController {
 
     @Resource
     private ChefService chefService;
+
+    @Resource
+    private CommentService commentService;
+
+    @Resource
+    private JoinFeastService joinFeastService;
+
 
     /**
      * 获得热门私厨
@@ -90,14 +101,34 @@ public class ChefController {
             return null;
         }
         Chef chef = chefService.getById(chefId);
+
         if(chef == null){
             result.put("statusCode", Constants.RESULT_CODE_SERVER_ERROR);
             result.put("message","没有对应结果");
             ResponseUtil.write(response, result);
             return null;
         }
+        //饭局数量
+        Map<String, Object> map = new HashMap<>();
+        map.put("chefId",chefId);
+        int feastNum = joinFeastService.getNumByChef(map);
+
+        //评价数
+        int commentNum = commentService.getNumByChefId(chefId);
+
+        //获得的评价
+        List<Comment> commentList = commentService.getByChefId(chefId);
+        if(!commentList.isEmpty()){
+            JSONArray commentJsonArray = JSONArray.fromObject(commentList);
+            result.put("comment", commentJsonArray);
+        }
+
+
         JSONArray jsonArray = JSONArray.fromObject(chef);
+
         result.put("rows", jsonArray);
+        result.put("feastNum", feastNum);
+        result.put("commentNum", commentNum);
         result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
         result.put("message","success");
         ResponseUtil.write(response, result);

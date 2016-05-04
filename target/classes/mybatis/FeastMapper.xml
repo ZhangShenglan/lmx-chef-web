@@ -53,4 +53,12 @@
         SELECT * FROM feast
        WHERE feastId = #{feastId}
       </select>
+
+    <update id="update" parameterType="Feast">
+        update feast
+        set
+        feastId= #{feastId},title=#{title},beginTime=#{beginTime},region=#{region},place=#{place},price= #{price},liked=#{liked},img=#{img},applied=#{applied},content=#{content},
+                chefId= #{chefId},menu=#{menu},menuPreview=#{menuPreview},timeType=#{timeType},category=#{category}
+        where feastId=#{feastId}
+    </update>
 </mapper>

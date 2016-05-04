@@ -14,6 +14,10 @@ public class Chef implements Serializable {
     private String place;
     private int likedNum;
     private String desc;            //自我介绍
+    private String joinTime;
+
+    private Integer feastNum;
+    private Integer commetNum;
 
     public Long getChefId() {
         return chefId;
@@ -69,5 +73,31 @@ public class Chef implements Serializable {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getJoinTime() {
+        return joinTime;
+    }
+
+    public void setJoinTime(String joinTime) {
+        this.joinTime = joinTime;
+    }
+
+    public Integer getFeastNum() {
+        return feastNum;
+    }
+
+    public void setFeastNum(Integer feastNum) {
+        this.feastNum = feastNum;
+    }
+
+
+
+    public Integer getCommetNum() {
+        return commetNum;
+    }
+
+    public void setCommetNum(Integer commetNum) {
+        this.commetNum = commetNum;
     }
 }

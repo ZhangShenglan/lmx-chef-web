@@ -28,4 +28,9 @@ public class OrderServiceImpl implements OrderService{
         return orderMapper.getNumByUserId(map);
     }
 
+    @Override
+    public int create(Order order){
+        return orderMapper.create(order);
+    }
+
 }

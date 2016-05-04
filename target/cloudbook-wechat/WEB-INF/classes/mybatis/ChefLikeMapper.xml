@@ -42,7 +42,13 @@
     <select id="getNumByUserId" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT count(id) FROM chef_beliked
         <where>
-            is_delete != -1 and userId=#{userId}
+            is_delete != -1
+            <if test="userId!=null">
+                and userId = #{userId}
+            </if>
+            <if test="chefId!=null">
+                and chefId = #{chefId}
+            </if>
         </where>
     </select>
 

@@ -12,6 +12,8 @@ public class Order implements Serializable {
     private Integer state; //订单状态 1待支付 2等待开始 3交易完成 4交易关闭
     private Double unitPrice;
     private Integer number;
+    private String phone;
+    private String remark;
 
     private String feastTitle;
     private String images;
@@ -78,5 +80,21 @@ public class Order implements Serializable {
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

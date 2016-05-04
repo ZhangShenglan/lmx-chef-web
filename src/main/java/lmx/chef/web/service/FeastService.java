@@ -33,5 +33,7 @@ public interface FeastService {
      */
     Feast getById(Long id);
 
+    int update(Feast feast);
+
 
 }
