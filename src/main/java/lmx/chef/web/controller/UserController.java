@@ -35,8 +35,9 @@ public class UserController {
             return null;
         }
         if(userService.getUserByPhone(phone) != null && userService.getUserByPhone(phone).getUserId()!=null ){
-            result.put("statusCode", Constants.RESULT_CODE_ILLEGAL_REQUST);
-            result.put("message","手机号码已被占用");
+            result.put("userName",userService.getUserByPhone(phone).getName());
+            result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
+            result.put("message","用户已经注册");
             ResponseUtil.write(response, result);
             return null;
         }
