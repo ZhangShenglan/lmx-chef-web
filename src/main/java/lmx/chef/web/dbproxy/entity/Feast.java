@@ -23,6 +23,8 @@ public class Feast implements Serializable {
     private int timeType;       //时间类别 0 全部 1 brunch 2 午餐 3 下午茶 4 晚餐
     private int category;       //菜系 0全部 1中国菜 2日料 3西餐 4甜品烘焙
 
+    private int flag;           //用户是否收藏
+
     public Long getFeastId() {
         return feastId;
     }
@@ -141,5 +143,13 @@ public class Feast implements Serializable {
 
     public void setCategory(int category) {
         this.category = category;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }

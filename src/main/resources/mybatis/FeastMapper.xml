@@ -32,7 +32,7 @@
             </if>
         </where>
         ${sort}
-        <if test="start!=null and pageSize!=null">
+        <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
     </select>

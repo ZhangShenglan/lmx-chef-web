@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lmx.chef.web.dbproxy.dao.FeastLikeMapper">
+
+    <resultMap type="FeastLike" id="FeastLikeResult">
+        <result property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="feastId" column="feastId"/>
+        <result property="createTime" column="createTime"/>
+    </resultMap>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="FeastLike">
+        insert into feast_beliked(userId, feastId, create_time)
+        values(#{userId}, #{feastId}, #{createTime})
+    </insert>
+
+    <select id="getByUserId" parameterType="java.util.Map" resultMap="FeastLikeResult">
+        SELECT * FROM feast_beliked
+        <where>
+            <if test="userId!=null">
+                and userId = #{userId}
+            </if>
+            <if test="feastId!=null">
+                and feastId = #{feastId}
+            </if>
+        </where>
+    </select>
+
+    </mapper>

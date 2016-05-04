@@ -85,6 +85,7 @@ public class FeastController {
                               @RequestParam(value = "timeType", required = false) Integer timeType,
                               @RequestParam(value = "category", required = false) Integer category,
                               @RequestParam(value = "sort", required = false) String sort,
+                              @RequestParam(value = "userId", required = false) Long userId,
                               HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         if (currPage!=null && currPage > 0 && pageSize != null && pageSize > 0) {
@@ -104,22 +105,28 @@ public class FeastController {
         if("liked".equals(sort)){
             map.put("sort", " ORDER BY liked DESC");
         }
-        List<Feast> feasts = feastService.getFeastList(map);
-        Long total = feastService.getTotalNum(map);
-        JSONObject result = new JSONObject();
-        if(feasts.isEmpty()){
-            result.put("statusCode", Constants.RESULT_CODE_SERVER_ERROR);
-            result.put("message","没有对应结果");
+
+
+            List<Feast> feasts = feastService.getFeastList(map);
+
+            Long total = feastService.getTotalNum(map);
+            JSONObject result = new JSONObject();
+            if(feasts.isEmpty()){
+                result.put("statusCode", Constants.RESULT_CODE_SERVER_ERROR);
+                result.put("message","没有对应结果");
+                ResponseUtil.write(response, result);
+                return null;
+            }
+            JSONArray jsonArray = JSONArray.fromObject(feasts);
+            result.put("rows", jsonArray);
+            result.put("total", total);
+            result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
+            result.put("message","success");
             ResponseUtil.write(response, result);
             return null;
-        }
-        JSONArray jsonArray = JSONArray.fromObject(feasts);
-        result.put("rows", jsonArray);
-        result.put("total", total);
-        result.put("statusCode", Constants.RESULT_CODE_SUCCESS);
-        result.put("message","success");
-        ResponseUtil.write(response, result);
-        return null;
+
+
+
     }
 
     /**
