@@ -33,7 +33,7 @@
         </where>
         ${sort}
         <if test="start!=null and pageSize!=null">
-            limit #{start},#{pageSize}
+            limit #{start},#{size}
         </if>
     </select>
 
@@ -42,7 +42,7 @@
         <where>
             <if test="timeType!=null">
                 and timeType = #{timeType}
-            </if>Z
+            </if>
             <if test="category!=null">
                 and category = #{category}
             </if>
