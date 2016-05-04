@@ -1,6 +1,7 @@
 package lmx.chef.web.dbproxy.dao;
 
 import lmx.chef.web.dbproxy.entity.Feast;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
  * Created by lmx on 16/4/22.
  * 宴会dao层
  */
+@Repository
 public interface FeastMapper {
     /**
      * 根据相应的条件返回宴会列表
