@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lmx.chef.web.dbproxy.dao.ChefMapper">
+    <resultMap type="Chef" id="ChefResult">
+        <result property="chefId" column="chefId"/>
+        <result property="name" column="name"/>
+        <result property="awatar" column="awatar"/>
+        <result property="region" column="region"/>
+        <result property="place" column="place"/>
+        <result property="likedNum" column="likedNum"/>
+        <result property="desc" column="desc"/>
+    </resultMap>
+
+    <select id="getChefList" parameterType="java.util.Map" resultMap="ChefResult">
+        SELECT * FROM chef
+        <where>
+            <if test="name!=null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+        ${sort}
+        <if test="start!=null and pageSize!=null">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+
+    <select id="getTotalNum" parameterType="java.util.Map" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM chef
+        <where>
+            <if test="name!=null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="ChefResult">
+        SELECT * FROM chef
+        WHERE chefId = #{chefId}
+    </select>
+
+
+</mapper>
