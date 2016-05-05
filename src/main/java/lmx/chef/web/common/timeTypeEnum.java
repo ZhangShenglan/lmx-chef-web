@@ -5,7 +5,7 @@ package lmx.chef.web.common;
  * 宴会时间类型枚举
  */
 public enum  timeTypeEnum {
-    BRUNCH(1,"午餐"),AFTER_LUNCH(2,"下午茶"),DINNER(3,"晚餐");
+    BRUNCH(0,"brunch"),LUNCH(1,"午餐"),AFTER_LUNCH(2,"下午茶"),DINNER(3,"晚餐");
 
     private Integer num;private String value;
     timeTypeEnum(Integer num,String value){
