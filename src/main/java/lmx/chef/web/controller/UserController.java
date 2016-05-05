@@ -95,6 +95,7 @@ public class UserController {
         int flag = userService.createUser(userBean);
 
         if(flag > 0){
+            result.put("userId",userBean.getUserId());
             result.put("userName",userBean.getName());
             result.put("phone",userBean.getPhone());
             result.put("avatar",userBean.getAvatar());
