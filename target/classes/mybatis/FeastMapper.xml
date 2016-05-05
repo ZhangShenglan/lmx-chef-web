@@ -25,10 +25,10 @@
         SELECT * FROM feast
         <where>
             <if test="timeType!=null">
-                and timeType = #{timeType}
+                and timeType in (#{timeType})
             </if>
             <if test="category!=null">
-                and category = #{category}
+                and category in (#{category})
             </if>
         </where>
         ${sort}

@@ -82,8 +82,8 @@ public class FeastController {
     @RequestMapping("/list")
     public String getHOtFeast(@RequestParam(value = "currPage", required = false) Integer currPage,
                               @RequestParam(value = "pageSize", required = false) Integer pageSize,
-                              @RequestParam(value = "timeType", required = false) Integer timeType,
-                              @RequestParam(value = "category", required = false) Integer category,
+                              @RequestParam(value = "timeType", required = false) String timeType,
+                              @RequestParam(value = "category", required = false) String category,
                               @RequestParam(value = "sort", required = false) String sort,
                               @RequestParam(value = "userId", required = false) Long userId,
                               HttpServletResponse response) throws Exception {
@@ -93,11 +93,11 @@ public class FeastController {
             map.put("start", pageBean.getStart());
             map.put("size", pageBean.getPageSize());
         }
-        if(timeType!= null && timeType > 0){
-            map.put("timeType", timeType);
+        if(StringUtil.isNotEmpty(timeType)){
+            map.put("timeType",timeType);
         }
-        if(category != null && category > 0){
-            map.put("category", category);
+        if(StringUtil.isNotEmpty(category)){
+            map.put("category",category);
         }
         //排序关键字
         if ("price".equals(sort))
